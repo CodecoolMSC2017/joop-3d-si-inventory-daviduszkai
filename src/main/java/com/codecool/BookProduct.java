@@ -9,6 +9,7 @@ public class BookProduct extends Product{
     }
 
     public int getNumOfPages(){
+
         return numOfPages;
     }
 }
