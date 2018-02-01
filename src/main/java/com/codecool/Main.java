@@ -5,8 +5,8 @@ public class Main {
         PersistentStore ps = new PersistentStore();
         StoreManager storage = new StoreManager();
         storage.addStorage(ps);
-        storage.addBookProduct("Mama", 2500, 500);
-        storage.addBookProduct("Papa", 2500, 500);
+        storage.addCDProduct("Romantic",200,10);
+        storage.addBookProduct("Pisti's beautiful life", 2500, 500);
 
         //ps.loadProducts();
         System.out.println(storage.listProducts());
