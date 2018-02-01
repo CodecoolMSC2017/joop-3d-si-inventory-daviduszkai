@@ -5,10 +5,12 @@ public class Main {
         PersistentStore myPersistent = new PersistentStore();
         StoreManager myStorage = new StoreManager();
         myStorage.addStorage(myPersistent);
-        //myStorage.addCDProduct("Romantic",200,10);
-        //myStorage.addBookProduct("Pisti's beautiful life", 2500, 500);
 
-        myPersistent.loadProducts();
+        myStorage.addCDProduct("Romantic",200,10);
+        myStorage.addBookProduct("Pisti's beautiful life", 2500, 500);
+
+        myPersistent.store("Products.xml");
+        myPersistent.loadProducts("Products.xml");
         System.out.println(myStorage.listProducts());
         System.out.println(myStorage.getTotalProductPrice());
     }

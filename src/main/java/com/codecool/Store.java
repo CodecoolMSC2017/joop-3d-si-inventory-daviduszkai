@@ -20,7 +20,7 @@ import java.util.List;
 public abstract class Store implements StorageCapable {
     static File inputFile = new File("result.xml");
     static String filename = "Products.xml";
-    List<Product> listOfProducts = new ArrayList<>();
+    private List listOfProducts = new ArrayList<>();
 
     public List<Product> getProducts(){
         return listOfProducts;
@@ -31,32 +31,34 @@ public abstract class Store implements StorageCapable {
         return listOfProducts;
 
     }
-
     @Override
-    public void storeCDProduct(String name, int price, int size) {
-        Product CD = new CDProduct(name, price, size);
-        store(CD);
+    public void storeCDProduct(String name, int price, int tracks) {
+        storeProduct(createProduct("cd", name, price, tracks));
     }
 
     @Override
-    public void storeBookProduct(String name, int price, int size) {
-        Product book = new BookProduct(name, price, size);
-        store(book);
+    public void storeBookProduct(String name, int price, int pages) {
+        storeProduct(createProduct("book", name, price, pages));
     }
 
     protected abstract void storeProduct(Product product);
 
-    protected Product createProduct(String type, String name, int price, int size) {
-        if (type == "CD") {
-            CDProduct CD = new CDProduct(name, price, size);
-            return CD;
+    protected Product createProduct (String type, String name,int price, int size){
 
-        } else {
-            BookProduct Book = new BookProduct(name, price, size);
-            return Book;
+        Product product = null;
 
+        try {
+            if (type.toLowerCase().equals("book")) {
+                product = new BookProduct(name, price, size);
+            } else if (type.toLowerCase().equals("cd")) {
+                product = new CDProduct(name, price, size);
+            }
+
+        } catch (IllegalArgumentException ex) {
+            ex.printStackTrace();
+            System.out.println("Not valid type! (Try cd or book!)");
         }
-
+        return product;
     }
 
     private void saveToXml() {
@@ -128,20 +130,17 @@ public abstract class Store implements StorageCapable {
 
 
 
-    public List<Product> loadProducts() {
+    public List<Product> loadProducts(String filename) {
         try {
-            File fXmlFile = new File("Products.xml");
+            File fXmlFile = new File(filename);
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
 
             doc.getDocumentElement().normalize();
-            System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
             NodeList nList = doc.getElementsByTagName("Product");
-            //System.out.println("----------------------------");
             for (int temp = 0; temp < nList.getLength(); temp++) {
                 Node nNode = nList.item(temp);
-                System.out.println("\nCurrent Element :" + nNode.getNodeName());
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;
                     if (eElement.getAttribute("type").equals("cd")) {
@@ -163,8 +162,8 @@ public abstract class Store implements StorageCapable {
         return listOfProducts;
     }
 
-    public void store(Product product) {
-        storeProduct(product);
+    public void store(String filename) {
+        //storeProduct(product);
         saveToXml();
 
     }
