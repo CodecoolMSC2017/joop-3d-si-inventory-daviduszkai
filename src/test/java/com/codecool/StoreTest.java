@@ -42,8 +42,4 @@ class StoreTest {
         assertEquals(loadTest.size(), 146);
     }
 
-    @Test
-    void store() {
-
-    }
 }
