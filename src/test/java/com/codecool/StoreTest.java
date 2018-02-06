@@ -22,24 +22,24 @@ class StoreTest {
 
     @Test
     void getAllProduct() {
-        assertEquals(myPersistent.getAllProduct().size(), 74);
+        assertEquals(74,myPersistent.getAllProduct().size());
     }
 
     @Test
     void storeCDProduct() {
-        assertEquals(myPersistent.getAllProduct().get(0).getName(),"Romantic");
+        assertEquals("Romantic",myPersistent.getAllProduct().get(0).getName());
 
     }
 
     @Test
     void storeBookProduct() {
-        assertEquals(myPersistent.getAllProduct().get(3).getName(),"Kokero's life");
+        assertEquals("Kokero's life",myPersistent.getAllProduct().get(3).getName());
     }
 
     @Test
     void loadProducts() {
         List<Product> loadTest = myPersistent.loadProducts("TestStore.xml");
-        assertEquals(loadTest.size(), 146);
+        assertEquals(146,loadTest.size());
     }
 
 }
