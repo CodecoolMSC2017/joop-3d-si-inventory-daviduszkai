@@ -22,10 +22,6 @@ public abstract class Store implements StorageCapable {
     static String filename = "Products.xml";
     private List listOfProducts = new ArrayList<>();
 
-    public List<Product> getProducts(){
-        return listOfProducts;
-    }
-
     @Override
     public List<Product> getAllProduct() {
         return listOfProducts;
